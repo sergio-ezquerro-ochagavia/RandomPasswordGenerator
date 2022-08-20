@@ -1,3 +1,5 @@
+------------------------------------------------
+
 Name: Random Password Generator
 Version: 1.0.0
 Created by: Sergio Ezquerro Ochagavía

@@ -81,7 +81,7 @@ def save_file(override_file: bool, file_path: Path, result: str):
                     f.write("\n")
                 f.write(result)
 
-        logging.info("Password(s) written to file")
+        logging.debug("Password(s) written to file")
     else:
         logging.error("path is a directory")
 
@@ -121,10 +121,10 @@ if __name__ == "__main__":
 
     # Parameters here.
     parser.add_argument(
-        "-times", type=int, default=10, help="number of passwords to generate"
+        "-times", type=int, default=1, help="number of passwords to generate"
     )
     parser.add_argument(
-        "-length", type=int, default=16, help="length of passwords to generate"
+        "-length", type=int, default=20, help="length of passwords to generate"
     )
 
     # included characters group
