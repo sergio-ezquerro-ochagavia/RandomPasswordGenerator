@@ -1,3 +1,5 @@
+Random Password Generator
+
 ------------------------------------------------
 
 Name: Random Password Generator

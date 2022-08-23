@@ -1,9 +1,9 @@
 import argparse
 from genericpath import isdir
+import secrets
 import logging
 import os
 from pathlib import Path
-import random
 import string
 
 
@@ -100,20 +100,42 @@ def get_samples(upper: bool, lower: bool, num: bool, symb: bool):
 
 
 def gen_pw(times: int, lenght: int, upper: bool, lower: bool, num: bool, symb: bool):
-    pw: str = ""
+    pws = []
+
+    charset = get_samples(upper, lower, num, symb)
     for _ in range(times):
-        aux_str: str = "" if pw == "" else "\n"
-        pw += aux_str
-        for _ in range(lenght):
-            pw += random.choice(get_samples(upper, lower, num, symb))
-    return pw
+        pw : str = ''.join(secrets.choice(charset) for _ in range(lenght))
+        pws.append(pw)
+    result = pws.join('\n')
+    
+    return result
 
-
-if __name__ == "__main__":
+def get_parser():
+    epilog_array = []
+    epilog_array.append('Valid examples:')
+    epilog_array.append('')
+    epilog_array.append('> Generate 5 passwords with 20 characters each, using uppercase, lowercase and number characters, and print them as output')
+    epilog_array.append('    py RandPwGen.py -times 5 -length 20 -puln')
+    epilog_array.append('> Generate 10 passwords with 16 characters each, using uppercase, lowercase, number and symbol characters, and save them to the default file "pwds.txt"')
+    epilog_array.append('    py RandPwGen.py -times 10 -length 16 -s')
+    epilog_array.append('> Generate 1 password with 16 characters, and save it to "passwords.txt", overriding whatever was in it in the case it existed before')
+    epilog_array.append('    py RandPwGen.py -file "passwords.txt" -so')
+    epilog_array.append('')
+    epilog_array.append('')
+    epilog_array.append("As an alternative to the commandline, params can be placed in a file, one per line, and specified on the commandline like \"%(prog)s '@params.conf'\".")
+    epilog_array.append("    Example: py RandPwGen.py '@params.conf'")
+    
+    
+    epilog_str = ''
+    for line in epilog_array:
+        epilog_str += line + "\n"
+    
+    
     parser = argparse.ArgumentParser(
         description="The script in this project generates passwords. You can run the python script file either from the command line or graphically.",
-        epilog="As an alternative to the commandline, params can be placed in a file, one per line, and specified on the commandline like \"%(prog)s '@params.conf'\".",
+        epilog=epilog_str,
         fromfile_prefix_chars="@",
+        formatter_class=argparse.RawTextHelpFormatter
     )
     # Parameter group declaration
     group_ch = parser.add_argument_group(title="included characters", description=None)
@@ -149,6 +171,12 @@ if __name__ == "__main__":
     group_out.add_argument(
         "-v", "--verbose", help="deeper logging information", action="store_true"
     )
+    
+    return parser
+
+if __name__ == "__main__":
+    
+    parser = get_parser()
 
     args = parser.parse_args()
 
