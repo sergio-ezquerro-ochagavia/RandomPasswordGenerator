@@ -30,5 +30,14 @@ output:
   -file FILE      path of file to generate
   -v, --verbose   deeper logging information
 
-As an alternative to the commandline, params can be placed in a file, one per line, and specified on the commandline like        
-"RandPwGen.py '@params.conf'".
+Valid examples:
+
+> Generate 5 passwords with 20 characters each, using uppercase, lowercase and number characters, and print them as output       
+    py RandPwGen.py -times 5 -length 20 -puln
+> Generate 10 passwords with 16 characters each, using uppercase, lowercase, number and symbol characters, and save them to the default file "pwds.txt"
+    py RandPwGen.py -times 10 -length 16 -s
+> Generate 1 password with 16 characters, and save it to "passwords.txt", overriding whatever was in it in the case it existed before
+    py RandPwGen.py -file "passwords.txt" -so
+
+As an alternative to the commandline, params can be placed in a file, one per line, and specified on the commandline like "RandPwGen.py '@params.conf'".
+    Example: py RandPwGen.py '@params.conf'
