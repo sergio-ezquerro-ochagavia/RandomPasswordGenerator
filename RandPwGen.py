@@ -106,7 +106,7 @@ def gen_pw(times: int, lenght: int, upper: bool, lower: bool, num: bool, symb: b
     for _ in range(times):
         pw : str = ''.join(secrets.choice(charset) for _ in range(lenght))
         pws.append(pw)
-    result = pws.join('\n')
+    result = '\n'.join(pws)
     
     return result
 
